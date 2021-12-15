@@ -31,15 +31,13 @@ export default class Modelviewer {
         if (typeof opts.dom === 'string') {
             const parent = document.querySelector(opts.dom);
             parent && parent.appendChild(this.renderer.domElement);
-        }
-        else if (opts.dom instanceof HTMLElement) {
+        } else if (opts.dom instanceof HTMLElement) {
             opts.dom.appendChild(this.renderer.domElement);
-        }
-        else {
+        } else {
             document.body.appendChild(this.renderer.domElement);
         }
 
-        this.ambientLight = new THREE.AmbientLight("#FFFFFF");
+        this.ambientLight = new THREE.AmbientLight('#FFFFFF');
         this.scene.add(this.ambientLight);
 
         this.loadModel(this.opts.modelType, this.opts.model);
@@ -51,14 +49,17 @@ export default class Modelviewer {
         if (modelType === 'gltf') {
             const loader = new GLTFLoader();
             loader.load(modelsrc, (gltf) => {
-                gltf.scene.scale.set(.1,.1,.1);
+                gltf.scene.scale.set(.1, .1, .1);
                 this.scene.add(gltf.scene);
             });
+        }
+        else {
+            throw new Error('The model type does not implement the loading function')
         }
     }
 
     public animate() {
         requestAnimationFrame(() => this.animate());
-        this.renderer.render( this.scene, this.camera );
+        this.renderer.render(this.scene, this.camera);
     }
 }

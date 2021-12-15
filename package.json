@@ -1,9 +1,9 @@
 {
     "version": "0.1.0",
     "license": "Apache-2.0",
-    "main": "dist/index.js",
+    "main": "dist/modelviewer.js",
     "source": "src/index.ts",
-    "typings": "dist/index.d.ts",
+    "typings": "dist/types/index.d.ts",
     "files": [
         "dist",
         "src"
@@ -12,12 +12,8 @@
         "node": ">=10"
     },
     "scripts": {
-        "start": "tsdx watch",
-        "build": "tsdx build",
-        "build2": "parcel build",
-        "test": "tsdx test",
-        "lint": "tsdx lint",
-        "prepare": "tsdx build",
+        "start": "rollup --config rollup.config.js -w",
+        "build": "rollup --config rollup.config.js",
         "size": "size-limit",
         "analyze": "size-limit --why",
         "commit": "git-cz"
@@ -52,10 +48,10 @@
         "@rollup/plugin-node-resolve": "^13.1.1",
         "@rollup/plugin-typescript": "^8.3.0",
         "commitizen": "^4.2.4",
+        "git-cz": "^4.8.0",
         "inquirer": "^8.2.0",
-        "parcel": "^2.0.1",
         "rollup": "^2.61.1",
-        "tsdx": "^0.14.1",
+        "rollup-plugin-terser": "^7.0.2",
         "tslib": "^2.3.1",
         "typescript": "^4.5.4"
     },
