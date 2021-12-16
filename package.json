@@ -6,7 +6,9 @@
     "typings": "dist/types/index.d.ts",
     "files": [
         "dist",
-        "src"
+        "src",
+        "README.md",
+        "package.json"
     ],
     "engines": {
         "node": ">=10"
@@ -64,5 +66,8 @@
     "dependencies": {
         "@types/three": "^0.135.0",
         "three": "^0.135.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

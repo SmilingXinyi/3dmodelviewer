@@ -45,13 +45,23 @@ export default class Modelviewer {
         this.animate();
     }
 
-    loadModel(modelType: string, modelsrc: string) {
+    loadModel(modelType: string, modelsrc?: string) {
         if (modelType === 'gltf') {
             const loader = new GLTFLoader();
-            loader.load(modelsrc, (gltf) => {
-                gltf.scene.scale.set(.1, .1, .1);
-                this.scene.add(gltf.scene);
-            });
+            // loader.load(modelsrc, (gltf) => {
+            //     gltf.scene.scale.set(.1, .1, .1);
+            //     this.scene.add(gltf.scene);
+            // }, (size) => {
+            //     console.log(size);
+            // }, err => {
+            //     throw err;
+            // });
+
+            loader.loadAsync('https://xasset-open.cdn.bcebos.com/activity/jly.gltf',
+                    process => {
+                console.log(process);
+                    }
+            )
         }
         else {
             throw new Error('The model type does not implement the loading function')
