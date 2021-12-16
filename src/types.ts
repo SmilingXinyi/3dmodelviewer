@@ -3,11 +3,17 @@
  * @author xinyi
  */
 
+type Size = {
+    width: number,
+    height: number
+}
+
 export type Options = {
     auto: boolean
     modelType: string
     model: string
     backgroundColor?: number
     backgroundImage?: string
-    dom: string | HTMLElement
+    dom: string | HTMLElement,
+    size?: Size
 }
