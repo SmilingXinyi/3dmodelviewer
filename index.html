@@ -9,13 +9,30 @@
 
 <body>
 <div id="container" style="width: 700px; height: 400px; background-color: #000"></div>
-<script src="./output/index.js"></script>
+<script src="./dist/modelviewer.js"></script>
 <script>
-    new modelviewer({
-        auto: false,
-        model: '/test/jly.gltf',
-        modelType: 'gltf'
-    })
+    const dom = document.querySelector('#container');
+
+
+    const fetchMedel = async (url) => {
+        const data = await fetch('/test/jly.gltf')
+            .then(res => res.json())
+
+        new modelviewer({
+            auto: false,
+            model: data,
+            modelType: 'gltf',
+            dom,
+            size: {
+                width: 700,
+                height: 400
+            }
+        })
+    }
+
+    fetchMedel();
+
+
 </script>
 </body>
 </html>

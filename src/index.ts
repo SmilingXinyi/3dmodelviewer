@@ -20,10 +20,16 @@ export default class Modelviewer {
     constructor(opts: Options) {
         this.opts = opts;
 
-        this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        const widht = this.opts.size?.width || window.innerWidth;
+        const height = this.opts.size?.height || window.innerHeight;
 
-        this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
+        this.renderer = new THREE.WebGLRenderer({ alpha: true });
+        this.renderer.setSize(widht, height);
+
+        this.camera = new THREE.PerspectiveCamera(
+            45, widht / height, 0.1, 200
+        );
+
         this.camera.position.set(0, 0, 15);
 
         this.scene = new THREE.Scene();
@@ -40,9 +46,29 @@ export default class Modelviewer {
         this.ambientLight = new THREE.AmbientLight('#FFFFFF');
         this.scene.add(this.ambientLight);
 
-        this.loadModel(this.opts.modelType, this.opts.model);
+        if (typeof this.opts.model === 'string') {
+            this.loadModel(this.opts.modelType, this.opts.model);
+        }
+        else if (typeof this.opts.model === 'object') {
+            this.loadModelData(this.opts.modelType, JSON.stringify(this.opts.model))
+        }
 
         this.animate();
+    }
+
+    loadModelData(modelType: string, modelsrc: string) {
+        if (modelType === 'gltf') {
+            const loader = new GLTFLoader();
+            loader.parse(modelsrc, '', gltf => {
+                gltf.scene.scale.set(.1, .1, .1);
+                this.scene.add(gltf.scene);
+            }, err => {
+                throw err
+            });
+        }
+        else {
+            throw new Error('The model type does not implement the loading function')
+        }
     }
 
     loadModel(modelType: string, modelsrc: string) {
@@ -51,6 +77,10 @@ export default class Modelviewer {
             loader.load(modelsrc, (gltf) => {
                 gltf.scene.scale.set(.1, .1, .1);
                 this.scene.add(gltf.scene);
+            }, (process: ProgressEvent) => {
+                console.info(process)
+            }, err => {
+                throw err;
             });
         }
         else {
