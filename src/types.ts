@@ -14,6 +14,7 @@ export type Options = {
     model: string
     backgroundColor?: number
     backgroundImage?: string
-    dom: string | HTMLElement,
+    dom: string | HTMLElement
     size?: Size
+    helper?: Boolean
 }
