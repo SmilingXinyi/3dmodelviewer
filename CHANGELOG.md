@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.2.0...v0.3.0) (2021-12-17)
+
+
+### Features
+
+* 🎸 spin ([f1f2c51](https://github.com/SmilingXinyi/3dmodelviewer/commit/f1f2c510e5c3eba1794458fe7f66afb86ccf43ec))
+
+### [0.2.1](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.2.0...v0.2.1) (2021-12-17)
+
+
+### Features
+
+* 🎸 spin ([f1f2c51](https://github.com/SmilingXinyi/3dmodelviewer/commit/f1f2c510e5c3eba1794458fe7f66afb86ccf43ec))
+
 ## [0.2.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.1.0...v0.2.0) (2021-12-16)
 
 
