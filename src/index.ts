@@ -16,6 +16,7 @@ export default class Modelviewer {
     private renderer: Renderer;
     private camera: Camera;
     private ambientLight: Light;
+    private animations: Function[];
 
     constructor(opts: Options) {
         this.opts = opts;
@@ -23,14 +24,20 @@ export default class Modelviewer {
         const widht = this.opts.size?.width || window.innerWidth;
         const height = this.opts.size?.height || window.innerHeight;
 
-        this.renderer = new THREE.WebGLRenderer({ alpha: true });
+        this.animations = [];
+
+        this.renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true
+        });
         this.renderer.setSize(widht, height);
 
         this.camera = new THREE.PerspectiveCamera(
-            45, widht / height, 0.1, 200
+            40, widht / height, 0.1, 200
         );
 
-        this.camera.position.set(0, 0, 15);
+        this.camera.position.set(0, 0, 20);
+        // this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         this.scene = new THREE.Scene();
 
@@ -48,9 +55,13 @@ export default class Modelviewer {
 
         if (typeof this.opts.model === 'string') {
             this.loadModel(this.opts.modelType, this.opts.model);
-        }
-        else if (typeof this.opts.model === 'object') {
+        } else if (typeof this.opts.model === 'object') {
             this.loadModelData(this.opts.modelType, JSON.stringify(this.opts.model))
+        }
+
+        if (this.opts.helper) {
+            const axesHelper = new THREE.AxesHelper(5);
+            this.scene.add(axesHelper);
         }
 
         this.animate();
@@ -62,11 +73,14 @@ export default class Modelviewer {
             loader.parse(modelsrc, '', gltf => {
                 gltf.scene.scale.set(.1, .1, .1);
                 this.scene.add(gltf.scene);
+                this.animations.push(function () {
+                    // @ts-ignore
+                    this.scene.rotation.y += 0.002;
+                }.bind(gltf));
             }, err => {
                 throw err
             });
-        }
-        else {
+        } else {
             throw new Error('The model type does not implement the loading function')
         }
     }
@@ -82,14 +96,14 @@ export default class Modelviewer {
             }, err => {
                 throw err;
             });
-        }
-        else {
+        } else {
             throw new Error('The model type does not implement the loading function')
         }
     }
 
     public animate() {
         requestAnimationFrame(() => this.animate());
+        this.animations.forEach(funcs => funcs());
         this.renderer.render(this.scene, this.camera);
     }
 }
