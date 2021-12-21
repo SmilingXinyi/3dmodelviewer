@@ -73,10 +73,16 @@ export default class Modelviewer {
             loader.parse(modelsrc, '', gltf => {
                 gltf.scene.scale.set(.1, .1, .1);
                 this.scene.add(gltf.scene);
+                let dyal = 0.0025;
                 this.animations.push(function () {
-                    // @ts-ignore
-                    this.scene.rotation.y += 0.002;
-                }.bind(gltf));
+                    if (gltf.scene.rotation.y >= .5) {
+                        dyal = -Math.abs(dyal);
+                    }
+                    if (gltf.scene.rotation.y <= -.5) {
+                        dyal = Math.abs(dyal);
+                    }
+                    gltf.scene.rotation.y = gltf.scene.rotation.y + dyal;
+                });
             }, err => {
                 throw err
             });
