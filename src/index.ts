@@ -19,7 +19,9 @@ export default class Modelviewer {
     private animations: Function[];
 
     constructor(opts: Options) {
-        this.opts = opts;
+        this.opts = Object.assign({}, {
+            scale: .1
+        }, opts);
 
         const widht = this.opts.size?.width || window.innerWidth;
         const height = this.opts.size?.height || window.innerHeight;
@@ -33,7 +35,7 @@ export default class Modelviewer {
         this.renderer.setSize(widht, height);
 
         this.camera = new THREE.PerspectiveCamera(
-            40, widht / height, 0.1, 200
+            40, widht / height, .1, 200
         );
 
         this.camera.position.set(0, 0, 20);
@@ -72,7 +74,7 @@ export default class Modelviewer {
             loader.parse(modelsrc, '', gltf => {
                 let mesh = gltf.scene.children[0];
                 mesh.position.set(0,0,0);
-                gltf.scene.scale.set(.01, .01, .01);
+                gltf.scene.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
                 this.scene.add(gltf.scene);
                 let dyal = 0.0025;
                 this.animations.push(function () {
