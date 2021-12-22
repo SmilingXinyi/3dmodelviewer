@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.3.0...v0.4.0) (2021-12-22)
+
+
+### Features
+
+* 🎸 animation mode update ([4ea16ec](https://github.com/SmilingXinyi/3dmodelviewer/commit/4ea16ecbf5d0df87291b559b629fe2a6a85ea6a6))
+* 🎸 shake ([8bd771e](https://github.com/SmilingXinyi/3dmodelviewer/commit/8bd771e371966aadfa123f2a5b0eb6c2d05ea552))
+
 ## [0.3.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.2.0...v0.3.0) (2021-12-17)
 
 
