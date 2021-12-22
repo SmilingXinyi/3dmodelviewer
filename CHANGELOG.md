@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.4.0...v0.5.0) (2021-12-22)
+
+
+### Features
+
+* 🎸 scale value ([5057348](https://github.com/SmilingXinyi/3dmodelviewer/commit/50573486e8e5f0131023583eb9322bb72f696595))
+
 ## [0.4.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.3.0...v0.4.0) (2021-12-22)
 
 
