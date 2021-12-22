@@ -37,7 +37,6 @@ export default class Modelviewer {
         );
 
         this.camera.position.set(0, 0, 20);
-        // this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         this.scene = new THREE.Scene();
 
@@ -71,7 +70,9 @@ export default class Modelviewer {
         if (modelType === 'gltf') {
             const loader = new GLTFLoader();
             loader.parse(modelsrc, '', gltf => {
-                gltf.scene.scale.set(.1, .1, .1);
+                let mesh = gltf.scene.children[0];
+                mesh.position.set(0,0,0);
+                gltf.scene.scale.set(.01, .01, .01);
                 this.scene.add(gltf.scene);
                 let dyal = 0.0025;
                 this.animations.push(function () {
