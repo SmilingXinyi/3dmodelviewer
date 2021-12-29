@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import {
     Options
 } from './types';
-import {Object3D, Renderer, Camera, Light} from 'three';
+import {Object3D, Renderer, Camera} from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 
 export default class Modelviewer {
@@ -15,7 +15,6 @@ export default class Modelviewer {
     private scene: Object3D;
     private renderer: Renderer;
     private camera: Camera;
-    private ambientLight: Light;
     private animations: Function[];
 
     constructor(opts: Options) {
@@ -51,9 +50,6 @@ export default class Modelviewer {
             document.body.appendChild(this.renderer.domElement);
         }
 
-        this.ambientLight = new THREE.AmbientLight('#FFFFFF');
-        this.scene.add(this.ambientLight);
-
         if (typeof this.opts.model === 'string') {
             this.loadModel(this.opts.modelType, this.opts.model);
         } else if (typeof this.opts.model === 'object') {
@@ -65,6 +61,20 @@ export default class Modelviewer {
             this.scene.add(axesHelper);
         }
 
+        if (this.opts.ambientLights) {
+            this.opts.ambientLights.forEach(({color = 0xffffff, intensity = 1}) => (
+                this.scene.add(new THREE.AmbientLight(color, intensity))
+            ));
+        }
+
+        if (this.opts.directionalLights) {
+            this.opts.directionalLights.forEach(({position, color = 0xffffff}) => {
+                const directionalLight = new THREE.DirectionalLight(color);
+                directionalLight.position.set(...position);
+                this.scene.add(directionalLight);
+            });
+        }
+
         this.animate();
     }
 
@@ -73,7 +83,7 @@ export default class Modelviewer {
             const loader = new GLTFLoader();
             loader.parse(modelsrc, '', gltf => {
                 let mesh = gltf.scene.children[0];
-                mesh.position.set(0,0,0);
+                mesh.position.set(0, 0, 0);
                 gltf.scene.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
                 this.scene.add(gltf.scene);
                 let dyal = 0.0025;

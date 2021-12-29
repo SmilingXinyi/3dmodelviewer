@@ -5,9 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Playground</title>
+    <style>
+        .timg {
+            animation-name: tshow;
+            animation-duration: 30s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        @keyframes tshow {
+            0% {
+                transform: perspective(2200px) rotate3d(0, 0, 0, 0);
+            }
+            25% {
+                transform: perspective(2200px) rotate3d(0, 1, 0, 45deg);
+            }
+            50% {
+                transform: perspective(2200px) rotate3d(0, 0, 0, 0);
+            }
+            75% {
+                transform: perspective(2200px) rotate3d(0, 1, 0, -45deg);
+            }
+            100% {
+                transform: perspective(2200px) rotate3d(0, 0, 0, 0);
+            }
+        }
+    </style>
 </head>
 
 <body>
+<img class="timg" src="/dist/test.png" width="300" />
 <div id="container" style="width: 700px; height: 400px; background-color: #000"></div>
 <script src="./dist/modelviewer.js"></script>
 <script>
@@ -15,7 +42,7 @@
 
 
     const fetchMedel = async (url) => {
-        const data = await fetch('/test/jky.gltf')
+        const data = await fetch('https://xasset-open.cdn.bcebos.com/activity/dev/ast/002/safe.gltf')
             .then(res => res.json())
 
         new modelviewer({
@@ -27,7 +54,14 @@
                 width: 700,
                 height: 400
             },
-            helper: true
+            helper: true,
+            ambientLights: [
+                {color: 0xffffff, intensity: .7},
+                {color: 0xffffff, intensity: .7}
+            ],
+            directionalLights: [
+                {position: [0, 1, 0]}
+            ]
         })
     }
 

@@ -17,5 +17,7 @@ export type Options = {
     dom: string | HTMLElement
     scale: number
     size?: Size
-    helper?: Boolean
+    helper?: boolean
+    ambientLights?: {color: number, intensity?: number}[],
+    directionalLights?: {color?: number, position: [x: number, y: number, z: number]}[]
 }
