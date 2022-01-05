@@ -17,9 +17,6 @@ export type Options = {
     dom: string | HTMLElement
     scale: number
     size?: Size
-<<<<<<< Updated upstream
-    helper?: Boolean
-=======
     helper?: boolean
     ambientLights?: {color: number, intensity?: number}[]
     directionalLights?: {
@@ -27,5 +24,4 @@ export type Options = {
     }[]
     stats?: boolean
     outputEncoding: number
->>>>>>> Stashed changes
 }
