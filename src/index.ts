@@ -7,8 +7,9 @@ import * as THREE from 'three';
 import {
     Options
 } from './types';
-import {Object3D, Renderer, Camera} from 'three';
+import {Object3D, Renderer, Camera, Light} from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+import Stats from 'three/examples/jsm/libs/stats.module'
 
 export default class Modelviewer {
     private opts: Options;
@@ -16,10 +17,13 @@ export default class Modelviewer {
     private renderer: Renderer;
     private camera: Camera;
     private animations: Function[];
+    private stats?: Stats;
 
     constructor(opts: Options) {
         this.opts = Object.assign({}, {
-            scale: .1
+            scale: .1,
+            stats: false,
+            outputEncoding: 0
         }, opts);
 
         const widht = this.opts.size?.width || window.innerWidth;
@@ -31,7 +35,17 @@ export default class Modelviewer {
             alpha: true,
             antialias: true
         });
+
+        // @ts-ignore
+        this.renderer.outputEncoding = this.opts.outputEncoding === 1
+            ? THREE.sRGBEncoding : THREE.LinearEncoding;
+
         this.renderer.setSize(widht, height);
+
+        if (this.opts.stats) {
+            this.stats = Stats();
+            document.body.appendChild(this.stats.dom);
+        }
 
         this.camera = new THREE.PerspectiveCamera(
             40, widht / height, .1, 200
@@ -68,8 +82,8 @@ export default class Modelviewer {
         }
 
         if (this.opts.directionalLights) {
-            this.opts.directionalLights.forEach(({position, color = 0xffffff}) => {
-                const directionalLight = new THREE.DirectionalLight(color);
+            this.opts.directionalLights.forEach(({position, color = 0xffffff, intensity = 1}) => {
+                const directionalLight = new THREE.DirectionalLight(color, intensity);
                 directionalLight.position.set(...position);
                 this.scene.add(directionalLight);
             });
@@ -78,12 +92,30 @@ export default class Modelviewer {
         this.animate();
     }
 
+    resetLight(value: number) {
+        this.scene.children.forEach((item, _i) => {
+            if (item.type === 'AmbientLight'
+                && item instanceof Light) {
+                item.intensity = value;
+            }
+        });
+    }
+
+    clearModel(type: string) {
+        let index = -1;
+        this.scene.children.forEach((item, i) => {
+            if (item.type === type)
+                index = i;
+        });
+        this.scene.children.splice(index, 1);
+    }
+
     loadModelData(modelType: string, modelsrc: string) {
         if (modelType === 'gltf') {
             const loader = new GLTFLoader();
             loader.parse(modelsrc, '', gltf => {
                 let mesh = gltf.scene.children[0];
-                mesh.position.set(0, 0, 0);
+                mesh.position.set(0,0,0);
                 gltf.scene.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
                 this.scene.add(gltf.scene);
                 let dyal = 0.0025;
@@ -97,7 +129,7 @@ export default class Modelviewer {
                     gltf.scene.rotation.y = gltf.scene.rotation.y + dyal;
                 });
             }, err => {
-                throw err
+                throw err;
             });
         } else {
             throw new Error('The model type does not implement the loading function')
@@ -122,6 +154,7 @@ export default class Modelviewer {
 
     public animate() {
         requestAnimationFrame(() => this.animate());
+        this.stats && this.stats.update();
         this.animations.forEach(funcs => funcs());
         this.renderer.render(this.scene, this.camera);
     }

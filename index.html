@@ -5,7 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Playground</title>
+
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+        }
+
         .timg {
             animation-name: tshow;
             animation-duration: 30s;
@@ -33,19 +44,71 @@
     </style>
 </head>
 
-<body>
-<img class="timg" src="/dist/test.png" width="300" />
+<body ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+<!--<img class="timg" src="/dist/test.png" width="300" />-->
 <div id="container" style="width: 700px; height: 400px; background-color: #000"></div>
+<div>
+    <label>环境光1 (环境光为两次)</label>
+    <input id="l1" value="0.7">
+    <!--    <label>环境光2</label>-->
+    <!--    <input id="l2" value="0.7">-->
+    <button onclick="reset()">设置</button>
+</div>
 <script src="./dist/modelviewer.js"></script>
 <script>
     const dom = document.querySelector('#container');
+    let model = null;
 
+    let mv = null;
+
+    // document.querySelector('#here').addEventListener('drop', function(e) {
+    //     console.log(e);
+    // });
+
+    function reset() {
+        const l1 = document.querySelector('#l1').value;
+        // const l2 = document.querySelector('#l2').value;
+
+        console.log(mv.resetLight(l1));
+    }
+
+    function dropHandler(ev) {
+        ev.preventDefault();
+
+        if (ev.dataTransfer.items) {
+            for (let i = 0; i < ev.dataTransfer.items.length; i++) {
+                if (ev.dataTransfer.items[i].kind === 'file') {
+                    const file = ev.dataTransfer.items[i].getAsFile();
+                    const blob = file.slice(0, file.size, file.type);
+                    blob.text().then(result => {
+                        model = result;
+                        rerender(model);
+                    });
+                }
+            }
+        } else {
+            // Use DataTransfer interface to access the file(s)
+            for (var i = 0; i < ev.dataTransfer.files.length; i++) {
+                console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
+            }
+        }
+    }
+
+    function dragOverHandler(ev) {
+        ev.preventDefault();
+    }
+
+    const rerender = (data) => {
+        mv.clearModel('Group');
+        mv.loadModelData('gltf', data);
+    };
 
     const fetchMedel = async (url) => {
-        const data = await fetch('https://xasset-open.cdn.bcebos.com/activity/dev/ast/002/safe.gltf')
-            .then(res => res.json())
+        // const data = await fetch('/test/jky.gltf')
+        const data = model || await fetch('test/jky.gltf')
+            .then(res => res.json());
 
-        new modelviewer({
+        mv = new modelviewer({
             auto: false,
             model: data,
             modelType: 'gltf',
@@ -56,17 +119,18 @@
             },
             helper: true,
             ambientLights: [
-                {color: 0xffffff, intensity: .7},
-                {color: 0xffffff, intensity: .7}
+                {color: 0xffffff, intensity: .5},
+                {color: 0xffffff, intensity: .5}
             ],
             directionalLights: [
-                {position: [0, 1, 0]}
-            ]
-        })
-    }
+                {position: [0, -.5, -2], intensity: .2},
+                {position: [0, .2, 1], intensity: .4}
+            ],
+            outputEncoding: 1
+        });
+    };
 
     fetchMedel();
-
 
 </script>
 </body>

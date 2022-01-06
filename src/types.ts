@@ -18,6 +18,10 @@ export type Options = {
     scale: number
     size?: Size
     helper?: boolean
-    ambientLights?: {color: number, intensity?: number}[],
-    directionalLights?: {color?: number, position: [x: number, y: number, z: number]}[]
+    ambientLights?: {color: number, intensity?: number}[]
+    directionalLights?: {
+        color?: number, position: [x: number, y: number, z: number], intensity?: number
+    }[]
+    stats?: boolean
+    outputEncoding: number
 }
