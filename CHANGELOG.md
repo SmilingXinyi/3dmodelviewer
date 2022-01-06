@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.0...v0.7.1) (2022-01-06)
+
+
+### Features
+
+* 🎸 exportEncoding supported ([04d1271](https://github.com/SmilingXinyi/3dmodelviewer/commit/04d1271c0203246f14c98bada19228daf9a42058))
+* 🎸 sRGB support ([e53241f](https://github.com/SmilingXinyi/3dmodelviewer/commit/e53241fbc464f0320be2e5a887a751c488cec7b7))
+
+
+### Bug Fixes
+
+* 🐛 render color ([dd103d1](https://github.com/SmilingXinyi/3dmodelviewer/commit/dd103d123c5e2b7b757a804560c350d615b1f49c))
+
 ## [0.7.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.6.0...v0.7.0) (2021-12-29)
 
 
