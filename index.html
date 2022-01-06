@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Playground</title>
-<<<<<<< Updated upstream
-</head>
 
-<body>
-=======
     <style>
         html, body {
             margin: 0;
@@ -50,13 +46,12 @@
 
 <body ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
 <!--<img class="timg" src="/dist/test.png" width="300" />-->
->>>>>>> Stashed changes
 <div id="container" style="width: 700px; height: 400px; background-color: #000"></div>
 <div>
     <label>环境光1 (环境光为两次)</label>
     <input id="l1" value="0.7">
-<!--    <label>环境光2</label>-->
-<!--    <input id="l2" value="0.7">-->
+    <!--    <label>环境光2</label>-->
+    <!--    <input id="l2" value="0.7">-->
     <button onclick="reset()">设置</button>
 </div>
 <script src="./dist/modelviewer.js"></script>
@@ -84,11 +79,11 @@
             for (let i = 0; i < ev.dataTransfer.items.length; i++) {
                 if (ev.dataTransfer.items[i].kind === 'file') {
                     const file = ev.dataTransfer.items[i].getAsFile();
-                    const blob = file.slice(0, file.size, file.type)
+                    const blob = file.slice(0, file.size, file.type);
                     blob.text().then(result => {
                         model = result;
                         rerender(model);
-                    })
+                    });
                 }
             }
         } else {
@@ -106,15 +101,12 @@
     const rerender = (data) => {
         mv.clearModel('Group');
         mv.loadModelData('gltf', data);
-    }
+    };
 
     const fetchMedel = async (url) => {
-<<<<<<< Updated upstream
-        const data = await fetch('/test/jky.gltf')
-=======
+        // const data = await fetch('/test/jky.gltf')
         const data = model || await fetch('test/jky.gltf')
->>>>>>> Stashed changes
-            .then(res => res.json())
+            .then(res => res.json());
 
         mv = new modelviewer({
             auto: false,
@@ -125,22 +117,18 @@
                 width: 700,
                 height: 400
             },
-<<<<<<< Updated upstream
-            helper: true
-=======
             helper: true,
             ambientLights: [
-                {color: 0xffffff, intensity: .6},
-                {color: 0xffffff, intensity: .6},
+                {color: 0xffffff, intensity: .5},
+                {color: 0xffffff, intensity: .5}
             ],
             directionalLights: [
-                {position: [0, -.5, -2], intensity: .5},
-                // {position: [0, .4, 1], intensity: .4}
+                {position: [0, -.5, -2], intensity: .2},
+                {position: [0, .2, 1], intensity: .4}
             ],
-            outputEncoding: 2
->>>>>>> Stashed changes
-        })
-    }
+            outputEncoding: 1
+        });
+    };
 
     fetchMedel();
 

@@ -16,7 +16,6 @@ export default class Modelviewer {
     private scene: Object3D;
     private renderer: Renderer;
     private camera: Camera;
-    private ambientLight: Light;
     private animations: Function[];
     private stats?: Stats;
 
@@ -38,7 +37,8 @@ export default class Modelviewer {
         });
 
         // @ts-ignore
-        this.renderer.outputEncoding = THREE.sRGBEncoding;
+        this.renderer.outputEncoding = this.opts.outputEncoding === 1
+            ? THREE.sRGBEncoding : THREE.LinearEncoding;
 
         this.renderer.setSize(widht, height);
 
@@ -64,9 +64,6 @@ export default class Modelviewer {
             document.body.appendChild(this.renderer.domElement);
         }
 
-        this.ambientLight = new THREE.AmbientLight('#FFFFFF');
-        this.scene.add(this.ambientLight);
-
         if (typeof this.opts.model === 'string') {
             this.loadModel(this.opts.modelType, this.opts.model);
         } else if (typeof this.opts.model === 'object') {
@@ -78,8 +75,6 @@ export default class Modelviewer {
             this.scene.add(axesHelper);
         }
 
-<<<<<<< Updated upstream
-=======
         if (this.opts.ambientLights) {
             this.opts.ambientLights.forEach(({color = 0xffffff, intensity = 1}) => (
                 this.scene.add(new THREE.AmbientLight(color, intensity))
@@ -94,7 +89,6 @@ export default class Modelviewer {
             });
         }
 
->>>>>>> Stashed changes
         this.animate();
     }
 
