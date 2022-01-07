@@ -29,13 +29,13 @@
                 transform: perspective(2200px) rotate3d(0, 0, 0, 0);
             }
             25% {
-                transform: perspective(2200px) rotate3d(0, 1, 0, 45deg);
+                transform: perspective(2200px) rotate3d(0, 1, 0, 30deg);
             }
             50% {
                 transform: perspective(2200px) rotate3d(0, 0, 0, 0);
             }
             75% {
-                transform: perspective(2200px) rotate3d(0, 1, 0, -45deg);
+                transform: perspective(2200px) rotate3d(0, 1, 0, -30deg);
             }
             100% {
                 transform: perspective(2200px) rotate3d(0, 0, 0, 0);
@@ -105,7 +105,7 @@
 
     const fetchMedel = async (url) => {
         // const data = await fetch('/test/jky.gltf')
-        const data = model || await fetch('test/jky.gltf')
+        const data = model || await fetch('test/y.gltf')
             .then(res => res.json());
 
         mv = new modelviewer({
@@ -124,7 +124,7 @@
             ],
             directionalLights: [
                 {position: [0, -.5, -2], intensity: .2},
-                {position: [0, .2, 1], intensity: .4}
+                {position: [60, -5.5, 1], intensity: .4}
             ],
             outputEncoding: 1
         });

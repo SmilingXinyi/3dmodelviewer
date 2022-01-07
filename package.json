@@ -19,7 +19,7 @@
         "size": "size-limit",
         "analyze": "size-limit --why",
         "commit": "git-cz",
-        "release": "npm run build && standard-version"
+        "release": "rm -rf dist && npm run build && standard-version"
     },
     "husky": {
         "hooks": {

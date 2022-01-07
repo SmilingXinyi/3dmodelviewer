@@ -37,7 +37,7 @@ export default class Modelviewer {
         });
 
         // @ts-ignore
-        this.renderer.outputEncoding = this.opts.outputEncoding === 1
+        this.renderer.outputEncoding = parseInt(this.opts.outputEncoding, 10) === 1
             ? THREE.sRGBEncoding : THREE.LinearEncoding;
 
         this.renderer.setSize(widht, height);
@@ -114,6 +114,11 @@ export default class Modelviewer {
         if (modelType === 'gltf') {
             const loader = new GLTFLoader();
             loader.parse(modelsrc, '', gltf => {
+                // @ts-ignore
+                if (gltf.scene.children[0]?.children[0]?.material?.opacity === 0) {
+                    // @ts-ignore
+                    gltf.scene.children[0]?.children[0]?.material?.opacity = .4
+                }
                 let mesh = gltf.scene.children[0];
                 mesh.position.set(0,0,0);
                 gltf.scene.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
