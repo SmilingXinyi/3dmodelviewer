@@ -23,7 +23,8 @@ export default class Modelviewer {
         this.opts = Object.assign({}, {
             scale: .1,
             stats: false,
-            outputEncoding: 0
+            outputEncoding: 0,
+            opacity: .3
         }, opts);
 
         const widht = this.opts.size?.width || window.innerWidth;
@@ -117,7 +118,7 @@ export default class Modelviewer {
                 // @ts-ignore
                 if (gltf.scene.children[0]?.children[0]?.material?.opacity === 0) {
                     // @ts-ignore
-                    gltf.scene.children[0]?.children[0]?.material?.opacity = .4
+                    gltf.scene.children[0]?.children[0]?.material?.opacity = this.opts.opacity
                 }
                 let mesh = gltf.scene.children[0];
                 mesh.position.set(0,0,0);
