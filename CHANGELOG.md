@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.2](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.1...v0.7.2) (2022-01-07)
+
+
+### Bug Fixes
+
+* 🐛 glass material ([a34e7ca](https://github.com/SmilingXinyi/3dmodelviewer/commit/a34e7ca05ae709d151fa78648f630f6b0b4395a2))
+
 ### [0.7.1](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.0...v0.7.1) (2022-01-06)
 
 
