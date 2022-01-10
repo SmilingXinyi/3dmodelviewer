@@ -14,15 +14,15 @@ export default {
     output: [
         outConf,
         Object.assign({}, outConf, {
-            file: 'dist/modelviewer.min.js',
-            plugins: [
-                terser()
-            ]
+            // file: 'dist/modelviewer.min.js',
+            // plugins: [
+            //     terser()
+            // ]
         }),
-        Object.assign({}, outConf, {
-            format: 'esm',
-            file: 'dist/modelviewer.esm.js'
-        })
+        // Object.assign({}, outConf, {
+        //     format: 'esm',
+        //     file: 'dist/modelviewer.esm.js'
+        // })
     ],
     plugins: [
         typescript({tsconfig: './tsconfig.json'}),

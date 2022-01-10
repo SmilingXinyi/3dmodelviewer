@@ -41,13 +41,7 @@ export default class Modelviewer {
 
         this.renderer.setPixelRatio(window.devicePixelRatio);
 
-        // @ts-ignore
-        console.log(this.renderer.getPixelRatio());
-
-        // @ts-ignore
-        // this.renderer.pixelRatio = window.devicePixelRatio ? window.devicePixelRatio : 1;
-
-        this.renderer.outputEncoding = parseInt(this.opts.outputEncoding, 10) === 1
+        this.renderer.outputEncoding = parseInt(String(this.opts.outputEncoding), 10) === 1
             ? THREE.sRGBEncoding : THREE.LinearEncoding;
 
         this.renderer.setSize(widht, height);
@@ -85,8 +79,8 @@ export default class Modelviewer {
             this.scene.add(axesHelper);
         }
 
-        const hlight = new THREE.HemisphereLight( 0xffffff, 0xffffff, .7 );
-        this.scene.add( hlight );
+        // const hlight = new THREE.HemisphereLight( 0xffffff, 0xffffff, .7 );
+        // this.scene.add( hlight );
 
         if (this.opts.ambientLights) {
             this.opts.ambientLights.forEach(({color = 0xffffff, intensity = 1}) => (

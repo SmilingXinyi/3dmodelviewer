@@ -49,8 +49,8 @@
 <div id="container" style="width: 700px; height: 400px; background-color: #000"></div>
 <div>
     <label>环境光1 (环境光为两次)</label>
-    <input id="l1" value="0.7">
-    <!--    <label>环境光2</label>-->
+    <!-- <input id="l1" value="0.7"> -->
+	<!--    <label>环境光2</label>-->
     <!--    <input id="l2" value="0.7">-->
     <button onclick="reset()">设置</button>
 </div>
@@ -74,6 +74,7 @@
 
     function dropHandler(ev) {
         ev.preventDefault();
+        ev.dataTransfer.effectAllowed = "all";
 
         if (ev.dataTransfer.items) {
             for (let i = 0; i < ev.dataTransfer.items.length; i++) {
@@ -104,8 +105,8 @@
     };
 
     const fetchMedel = async (url) => {
-        // const data = await fetch('/test/jky.gltf')
-        const data = model || await fetch('test/y.gltf')
+        const data = await fetch('/test/jky.gltf')
+        // const data = model || await fetch('https://cms-store.bj.bcebos.com/ast1.gltf')
             .then(res => res.json());
 
         mv = new modelviewer({
@@ -113,21 +114,23 @@
             model: data,
             modelType: 'gltf',
             dom,
+            scale: .1,
             size: {
                 width: 700,
                 height: 400
             },
             helper: true,
             ambientLights: [
-                {color: 0xffffff, intensity: .5},
-                {color: 0xffffff, intensity: .5}
+                { color: 0xffffff, intensity: .7},
+                // { color: 0xffffff, intensity: .5 }
             ],
             directionalLights: [
-                {position: [0, -.5, -2], intensity: .2},
-                {position: [60, -5.5, 1], intensity: .4}
+                // { position: [0, -.5, -2], intensity: .2 },
+                // { position: [0, 0, 1], intensity: .4 },
+                { position: [4, 6, 18], intensity: .6 }
             ],
             outputEncoding: 1,
-            opacity: .4
+            opacity: .5
         });
     };
 
