@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.4](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.3...v0.7.4) (2022-01-10)
+
+
+### Features
+
+* 🎸 shadow & hemispherelight ([544de95](https://github.com/SmilingXinyi/3dmodelviewer/commit/544de95d21e8b75d59c38372e3881d419d72a4b4))
+
 ### [0.7.3](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.2...v0.7.3) (2022-01-07)
 
 
