@@ -7,14 +7,14 @@ import * as THREE from 'three';
 import {
     Options
 } from './types';
-import {Object3D, Renderer, Camera, Light} from 'three';
+import {Object3D, Camera, Light, WebGLRenderer} from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import Stats from 'three/examples/jsm/libs/stats.module'
 
 export default class Modelviewer {
     private opts: Options;
     private scene: Object3D;
-    private renderer: Renderer;
+    private renderer: WebGLRenderer;
     private camera: Camera;
     private animations: Function[];
     private stats?: Stats;
@@ -37,7 +37,16 @@ export default class Modelviewer {
             antialias: true
         });
 
+        this.renderer.shadowMap.enabled = true;
+
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+
         // @ts-ignore
+        console.log(this.renderer.getPixelRatio());
+
+        // @ts-ignore
+        // this.renderer.pixelRatio = window.devicePixelRatio ? window.devicePixelRatio : 1;
+
         this.renderer.outputEncoding = parseInt(this.opts.outputEncoding, 10) === 1
             ? THREE.sRGBEncoding : THREE.LinearEncoding;
 
@@ -76,6 +85,9 @@ export default class Modelviewer {
             this.scene.add(axesHelper);
         }
 
+        const hlight = new THREE.HemisphereLight( 0xffffff, 0xffffff, .7 );
+        this.scene.add( hlight );
+
         if (this.opts.ambientLights) {
             this.opts.ambientLights.forEach(({color = 0xffffff, intensity = 1}) => (
                 this.scene.add(new THREE.AmbientLight(color, intensity))
@@ -86,6 +98,20 @@ export default class Modelviewer {
             this.opts.directionalLights.forEach(({position, color = 0xffffff, intensity = 1}) => {
                 const directionalLight = new THREE.DirectionalLight(color, intensity);
                 directionalLight.position.set(...position);
+                directionalLight.castShadow = true;
+                // directionalLight.shadow.mapSize.width = 1024;
+                // directionalLight.shadow.mapSize.height = 1024;
+                // const d = 50;
+                //
+                // directionalLight.shadow.camera.left = - d;
+                // directionalLight.shadow.camera.right = d;
+                // directionalLight.shadow.camera.top = d;
+                // directionalLight.shadow.camera.bottom = - d;
+
+                // directionalLight.shadow.camera.far = 3500;
+                // directionalLight.shadow.bias = - 0.0001;
+                directionalLight.shadow.mapSize.width = 2048;
+                directionalLight.shadow.mapSize.height = 2048;
                 this.scene.add(directionalLight);
             });
         }
@@ -121,7 +147,30 @@ export default class Modelviewer {
                     gltf.scene.children[0]?.children[0]?.material?.opacity = this.opts.opacity
                 }
                 let mesh = gltf.scene.children[0];
+                mesh.castShadow = true;
+                if (mesh.children.length > 0) {
+                    mesh.children = mesh.children.map(i => {
+                        i.castShadow = true;
+                        i.receiveShadow = true;
+                        return i;
+                    });
+                }
+                mesh.receiveShadow = true;
                 mesh.position.set(0,0,0);
+
+                let mesh2 = gltf.scene.children[1];
+                if(mesh2) {
+                    mesh2.castShadow = true;
+                    mesh2.receiveShadow = true;
+                    if (mesh2.children.length > 0) {
+                        mesh2.children = mesh2.children.map(i => {
+                            i.castShadow = true;
+                            i.receiveShadow = true;
+                            return i;
+                        });
+                    }
+                }
+
                 gltf.scene.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
                 this.scene.add(gltf.scene);
                 let dyal = 0.0025;
@@ -146,7 +195,9 @@ export default class Modelviewer {
         if (modelType === 'gltf') {
             const loader = new GLTFLoader();
             loader.load(modelsrc, (gltf) => {
-                gltf.scene.scale.set(.1, .1, .1);
+                let mesh = gltf.scene.children[0];
+                mesh.position.set(0,0,0);
+                gltf.scene.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
                 this.scene.add(gltf.scene);
             }, (process: ProgressEvent) => {
                 console.info(process)
