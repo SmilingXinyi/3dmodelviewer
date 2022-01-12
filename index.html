@@ -47,12 +47,13 @@
 <body ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
 <!--<img class="timg" src="/dist/test.png" width="300" />-->
 <div id="container" style="width: 700px; height: 400px; background-color: #000"></div>
+<!--<div id="container2" style="width: 700px; height: 400px; background-color: #000"></div>-->
 <div>
     <label>环境光1 (环境光为两次)</label>
     <!-- <input id="l1" value="0.7"> -->
 	<!--    <label>环境光2</label>-->
     <!--    <input id="l2" value="0.7">-->
-    <button onclick="reset()">设置</button>
+<!--    <button onclick="reset()">设置</button>-->
 </div>
 <script src="./dist/modelviewer.js"></script>
 <script>
@@ -67,8 +68,6 @@
 
     function reset() {
         const l1 = document.querySelector('#l1').value;
-        // const l2 = document.querySelector('#l2').value;
-
         console.log(mv.resetLight(l1));
     }
 
@@ -105,8 +104,7 @@
     };
 
     const fetchMedel = async (url) => {
-        const data = await fetch('/test/jky.gltf')
-        // const data = model || await fetch('https://cms-store.bj.bcebos.com/ast1.gltf')
+        const data = await fetch('/test/ly.gltf')
             .then(res => res.json());
 
         mv = new modelviewer({
@@ -115,27 +113,24 @@
             modelType: 'gltf',
             dom,
             scale: .1,
+            rotationValue: 0.25,
             size: {
                 width: 700,
                 height: 400
             },
-            helper: true,
+            // helper: true,
             ambientLights: [
-                { color: 0xffffff, intensity: .7},
-                // { color: 0xffffff, intensity: .5 }
+                { color: 0xffffff, intensity: .7}
             ],
             directionalLights: [
-                // { position: [0, -.5, -2], intensity: .2 },
-                // { position: [0, 0, 1], intensity: .4 },
                 { position: [4, 6, 18], intensity: .6 }
             ],
             outputEncoding: 1,
-            opacity: .5
+            opacity: .3
         });
     };
 
     fetchMedel();
-
 </script>
 </body>
 </html>

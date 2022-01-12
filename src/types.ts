@@ -24,4 +24,5 @@ export type Options = {
     }[]
     stats?: boolean
     outputEncoding: number
+    rotationValue: number
 }

@@ -24,7 +24,8 @@ export default class Modelviewer {
             scale: .1,
             stats: false,
             outputEncoding: 0,
-            opacity: .3
+            opacity: .3,
+            rotationValue: .4
         }, opts);
 
         const widht = this.opts.size?.width || window.innerWidth;
@@ -140,6 +141,26 @@ export default class Modelviewer {
                     // @ts-ignore
                     gltf.scene.children[0]?.children[0]?.material?.opacity = this.opts.opacity
                 }
+
+                // @ts-ignore
+                if (gltf.scene.children[0]?.children[0]?.material?.name === '材质.3') {
+
+                    const material1 = new THREE.MeshPhysicalMaterial({
+                        roughness: 0.4,
+                        transmission: 2,
+                        // @ts-ignore
+                        thickness: 0.4,
+                        opacity: 0.5,
+                        transparent: true,
+                        sheen: 0.5,
+                        reflectivity: 0.7,
+                        clearcoat: 0.2
+                    });
+
+                    // @ts-ignore
+                    gltf.scene.children[0]?.children[0]?.material = material1;
+                }
+
                 let mesh = gltf.scene.children[0];
                 mesh.castShadow = true;
                 if (mesh.children.length > 0) {
@@ -167,12 +188,13 @@ export default class Modelviewer {
 
                 gltf.scene.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
                 this.scene.add(gltf.scene);
-                let dyal = 0.0025;
+                let dyal = 0.0015;
+                let rotationValue = this.opts.rotationValue;
                 this.animations.push(function () {
-                    if (gltf.scene.rotation.y >= .5) {
+                    if (gltf.scene.rotation.y >= rotationValue) {
                         dyal = -Math.abs(dyal);
                     }
-                    if (gltf.scene.rotation.y <= -.5) {
+                    if (gltf.scene.rotation.y <= -rotationValue) {
                         dyal = Math.abs(dyal);
                     }
                     gltf.scene.rotation.y = gltf.scene.rotation.y + dyal;
