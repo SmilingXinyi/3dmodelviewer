@@ -18,8 +18,10 @@ export default class Modelviewer {
     private camera: Camera;
     private animations: Function[];
     private stats?: Stats;
+    private sp?: any;
 
-    constructor(opts: Options) {
+    constructor(opts: Options, sp: any) {
+        this.sp = sp;
         this.opts = Object.assign({}, {
             scale: .1,
             stats: false,
@@ -150,18 +152,7 @@ export default class Modelviewer {
 
                 // @ts-ignore
                 if (gltf.scene.children[0]?.children[0]?.material?.name === '材质.3') {
-
-                    const material1 = new THREE.MeshPhysicalMaterial({
-                        roughness: 0.4,
-                        transmission: 2,
-                        // @ts-ignore
-                        thickness: 0.4,
-                        opacity: 0.5,
-                        transparent: true,
-                        sheen: 0.5,
-                        reflectivity: 0.7,
-                        clearcoat: 0.2
-                    });
+                    const material1 = new THREE.MeshPhysicalMaterial(this.sp || {});
 
                     // @ts-ignore
                     gltf.scene.children[0]?.children[0]?.material = material1;
