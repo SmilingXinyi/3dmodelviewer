@@ -47,12 +47,13 @@
 <body ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
 <!--<img class="timg" src="/dist/test.png" width="300" />-->
 <div id="container" style="width: 700px; height: 400px; background-color: #000"></div>
+<!--<div id="container2" style="width: 700px; height: 400px; background-color: #000"></div>-->
 <div>
     <label>环境光1 (环境光为两次)</label>
     <input id="l1" value="0.7">
     <!--    <label>环境光2</label>-->
     <!--    <input id="l2" value="0.7">-->
-    <button onclick="reset()">设置</button>
+<!--    <button onclick="reset()">设置</button>-->
 </div>
 <script src="./dist/modelviewer.js"></script>
 <script>
@@ -105,29 +106,107 @@
 
     const fetchMedel = async (url) => {
         // const data = await fetch('/test/jky.gltf')
-        const data = model || await fetch('test/jky.gltf')
+        // const data = model || await fetch('test/jky.gltf')
+        const data = await fetch('/test/fcy.gltf')
+        // const data = model || await fetch('https://cms-store.bj.bcebos.com/ast1.gltf')
             .then(res => res.json());
+
+        const data2 = await fetch('/test/ly.gltf')
+            // const data = model || await fetch('https://cms-store.bj.bcebos.com/ast1.gltf')
+            .then(res => res.json());
+
+        const data3 = await fetch('/test/thy.gltf')
+            // const data = model || await fetch('https://cms-store.bj.bcebos.com/ast1.gltf')
+            .then(res => res.json());
+
+        let z = [
+            '/test/y00001.gltf',
+            '/test/y00002.gltf',
+            '/test/y00003.gltf',
+            '/test/y00004.gltf',
+            '/test/y00005.gltf',
+            '/test/y00006.gltf',
+            '/test/y00007.gltf',
+            '/test/y00008.gltf',
+            '/test/y00009.gltf',
+            '/test/y00010.gltf'
+        ]
+
+        // z.map(data => {
+        //     mv = new modelviewer({
+        //         auto: false,
+        //         model: data,
+        //         modelType: 'gltf',
+        //         dom,
+        //         scale: .1,
+        //         rotationValue: 0.25,
+        //         size: {
+        //             width: 700,
+        //             height: 400
+        //         },
+        //         // helper: true,
+        //         ambientLights: [
+        //             { color: 0xffffff, intensity: .7},
+        //             // { color: 0xffffff, intensity: .5 }
+        //         ],
+        //         directionalLights: [
+        //             // { position: [0, -.5, -2], intensity: .2 },
+        //             // { position: [0, 0, 1], intensity: .4 },
+        //             { position: [4, 6, 18], intensity: .6 }
+        //         ],
+        //         outputEncoding: 1,
+        //         opacity: .3
+        //     });
+        // })
 
         mv = new modelviewer({
             auto: false,
-            model: data,
+            model: data2,
             modelType: 'gltf',
             dom,
+            scale: .1,
+            rotationValue: 0.25,
             size: {
                 width: 700,
                 height: 400
             },
-            helper: true,
+            // helper: true,
             ambientLights: [
-                {color: 0xffffff, intensity: .5},
-                {color: 0xffffff, intensity: .5}
+                { color: 0xffffff, intensity: .7}
             ],
             directionalLights: [
-                {position: [0, -.5, -2], intensity: .2},
-                {position: [0, .2, 1], intensity: .4}
+                { position: [4, 6, 18], intensity: .6 }
             ],
-            outputEncoding: 1
+            outputEncoding: 1,
+            opacity: .3
         });
+
+        // mv2 = new modelviewer({
+        //     auto: false,
+        //     model: data3,
+        //     modelType: 'gltf',
+        //     dom,
+        //     scale: .1,
+        //     rotationValue: 0.25,
+        //     size: {
+        //         width: 700,
+        //         height: 400
+        //     },
+        //     // helper: true,
+        //     ambientLights: [
+        //         { color: 0xffffff, intensity: .7},
+        //         // { color: 0xffffff, intensity: .5 }
+        //     ],
+        //     directionalLights: [
+        //         // { position: [0, -.5, -2], intensity: .2 },
+        //         // { position: [0, 0, 1], intensity: .4 },
+        //         { position: [4, 6, 18], intensity: .6 }
+        //     ],
+        //     outputEncoding: 1,
+        //     opacity: .3
+        // });
+
+
     };
 
     fetchMedel();
