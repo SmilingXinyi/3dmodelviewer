@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.7](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.6...v0.7.7) (2022-01-12)
+
+
+### Features
+
+* 🎸 support sp material ([f07e245](https://github.com/SmilingXinyi/3dmodelviewer/commit/f07e245abc18f7f6aef25c15a7a09d1119d38879))
+
 ### [0.7.6](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.5...v0.7.6) (2022-01-12)
 
 
