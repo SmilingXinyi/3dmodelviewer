@@ -80,8 +80,14 @@ export default class Modelviewer {
             this.scene.add(axesHelper);
         }
 
-        // const hlight = new THREE.HemisphereLight( 0xffffff, 0xffffff, .7 );
-        // this.scene.add( hlight );
+        if (this.opts.hemisphereLight) {
+            const hlight = new THREE.HemisphereLight(
+                this.opts.hemisphereLight[0],
+                this.opts.hemisphereLight[1],
+                this.opts.hemisphereLight[2]
+            );
+            this.scene.add(hlight);
+        }
 
         if (this.opts.ambientLights) {
             this.opts.ambientLights.forEach(({color = 0xffffff, intensity = 1}) => (
