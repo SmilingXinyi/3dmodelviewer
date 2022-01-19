@@ -104,9 +104,10 @@
     };
 
     const fetchMedel = async (url) => {
-        const data = await fetch('/test/ly.gltf')
+        const data = await fetch('/test/xdy.gltf')
             .then(res => res.json());
 
+        console.time('load')
         mv = new modelviewer({
             auto: false,
             model: data,
@@ -118,7 +119,7 @@
                 width: 700,
                 height: 400
             },
-            // helper: true,
+            helper: true,
             ambientLights: [
                 { color: 0xffffff, intensity: .7}
             ],
@@ -126,7 +127,10 @@
                 { position: [4, 6, 18], intensity: .6 }
             ],
             outputEncoding: 1,
-            opacity: .3
+            opacity: .3,
+            parsed: success => {
+                console.timeEnd('load');
+            }
         }, {
             roughness: 0.8,
             transmission: 2,
@@ -137,8 +141,6 @@
             reflectivity: .3,
             clearcoat: .2
         });
-
-
     };
 
     fetchMedel();
