@@ -18,6 +18,7 @@ export default class Modelviewer {
     private camera: Camera;
     private animations: Function[];
     private stats?: Stats;
+    private parsed?: Function;
     private sp?: any;
 
     constructor(opts: Options, sp: any) {
@@ -29,6 +30,10 @@ export default class Modelviewer {
             opacity: .3,
             rotationValue: .4
         }, opts);
+
+        if (this.opts.parsed) {
+            this.parsed = this.opts.parsed;
+        }
 
         const widht = this.opts.size?.width || window.innerWidth;
         const height = this.opts.size?.height || window.innerHeight;
@@ -70,8 +75,6 @@ export default class Modelviewer {
         } else {
             document.body.appendChild(this.renderer.domElement);
         }
-
-        console.log(this.opts);
 
         if (this.opts.modelType === 'gltf') {
             if (typeof this.opts.model === 'string') {
@@ -128,7 +131,6 @@ export default class Modelviewer {
         }
 
         this.animate();
-        console.timeLog('load')
     }
 
     resetLight(value: number) {
@@ -159,7 +161,6 @@ export default class Modelviewer {
 
         const mesh = new THREE.Mesh( quad, material );
         mesh.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
-        console.log(mesh);
         const scene = new THREE.Scene();
         scene.add(mesh);
 
@@ -182,7 +183,6 @@ export default class Modelviewer {
         if (modelType === 'gltf') {
             const loader = new GLTFLoader();
             loader.parse(modelsrc, '', gltf => {
-                console.timeLog('load')
                 // @ts-ignore
                 if (gltf.scene.children[0]?.children[0]?.material?.opacity === 0) {
                     // @ts-ignore
@@ -235,7 +235,10 @@ export default class Modelviewer {
                     }
                     gltf.scene.rotation.y = gltf.scene.rotation.y + dyal;
                 });
+
+                this.parsed && this.parsed(true);
             }, err => {
+                this.parsed && this.parsed(false);
                 throw err;
             });
         } else {
