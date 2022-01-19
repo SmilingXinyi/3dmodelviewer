@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.8](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.7...v0.7.8) (2022-01-19)
+
+
+### Features
+
+* 🎸 support 2D image render ([b4caeac](https://github.com/SmilingXinyi/3dmodelviewer/commit/b4caeac1ea8bbec2ed3424a95d91a147a5095fa6))
+* 🎸 support parsing complete event ([17b6642](https://github.com/SmilingXinyi/3dmodelviewer/commit/17b6642a21f43e5c957d7f413742206ae2c9ebe3))
+
 ### [0.7.7](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.6...v0.7.7) (2022-01-12)
 
 
