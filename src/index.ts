@@ -71,11 +71,19 @@ export default class Modelviewer {
             document.body.appendChild(this.renderer.domElement);
         }
 
-        if (typeof this.opts.model === 'string') {
-            this.loadModel(this.opts.modelType, this.opts.model);
-        } else if (typeof this.opts.model === 'object') {
-            this.loadModelData(this.opts.modelType, JSON.stringify(this.opts.model))
+        console.log(this.opts);
+
+        if (this.opts.modelType === 'gltf') {
+            if (typeof this.opts.model === 'string') {
+                this.loadModel(this.opts.modelType, this.opts.model);
+            } else if (typeof this.opts.model === 'object') {
+                this.loadModelData(this.opts.modelType, JSON.stringify(this.opts.model))
+            }
         }
+        else if (this.opts.modelType === '2d') {
+            this.load2DImage(this.opts.model);
+        }
+
 
         if (this.opts.helper) {
             const axesHelper = new THREE.AxesHelper(5);
@@ -120,6 +128,7 @@ export default class Modelviewer {
         }
 
         this.animate();
+        console.timeLog('load')
     }
 
     resetLight(value: number) {
@@ -140,10 +149,40 @@ export default class Modelviewer {
         this.scene.children.splice(index, 1);
     }
 
+    load2DImage(src: string) {
+        var texture = new THREE.TextureLoader().load(src);
+        const material = new THREE.MeshBasicMaterial( { map: texture, transparent: true } );
+        const quad = new THREE.BoxGeometry( 1, 1, 1 );
+
+        // const material1 = new THREE.MeshBasicMaterial( { map: texture, transparent: true } );
+        // const quad1 = new THREE.PlaneGeometry( 1.3 , 1.3 );
+
+        const mesh = new THREE.Mesh( quad, material );
+        mesh.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
+        console.log(mesh);
+        const scene = new THREE.Scene();
+        scene.add(mesh);
+
+        this.scene.add(scene);
+
+        let dyal = 0.0015;
+        let rotationValue = this.opts.rotationValue;
+        this.animations.push(function () {
+            if (scene.rotation.y >= rotationValue) {
+                dyal = -Math.abs(dyal);
+            }
+            if (scene.rotation.y <= -rotationValue) {
+                dyal = Math.abs(dyal);
+            }
+            scene.rotation.y = scene.rotation.y + dyal;
+        });
+    }
+
     loadModelData(modelType: string, modelsrc: string) {
         if (modelType === 'gltf') {
             const loader = new GLTFLoader();
             loader.parse(modelsrc, '', gltf => {
+                console.timeLog('load')
                 // @ts-ignore
                 if (gltf.scene.children[0]?.children[0]?.material?.opacity === 0) {
                     // @ts-ignore
@@ -168,10 +207,10 @@ export default class Modelviewer {
                     });
                 }
                 mesh.receiveShadow = true;
-                mesh.position.set(0,0,0);
+                mesh.position.set(0, 0, 0);
 
                 let mesh2 = gltf.scene.children[1];
-                if(mesh2) {
+                if (mesh2) {
                     mesh2.castShadow = true;
                     mesh2.receiveShadow = true;
                     if (mesh2.children.length > 0) {
@@ -209,7 +248,7 @@ export default class Modelviewer {
             const loader = new GLTFLoader();
             loader.load(modelsrc, (gltf) => {
                 let mesh = gltf.scene.children[0];
-                mesh.position.set(0,0,0);
+                mesh.position.set(0, 0, 0);
                 gltf.scene.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
                 this.scene.add(gltf.scene);
             }, (process: ProgressEvent) => {

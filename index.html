@@ -107,6 +107,7 @@
         const data = await fetch('/test/ly.gltf')
             .then(res => res.json());
 
+        console.time('load')
         mv = new modelviewer({
             auto: false,
             model: data,
@@ -118,7 +119,7 @@
                 width: 700,
                 height: 400
             },
-            // helper: true,
+            helper: true,
             ambientLights: [
                 { color: 0xffffff, intensity: .7}
             ],
@@ -128,14 +129,14 @@
             outputEncoding: 1,
             opacity: .3
         }, {
-            roughness: 0.5,
-            transmission: 2.2,
-            thickness: 10,
+            roughness: 0.8,
+            transmission: 2,
+            thickness: .4,
             opacity: 0.5,
             transparent: true,
-            sheen: .6,
-            reflectivity: .4,
-            clearcoat: 1.2
+            sheen: .4,
+            reflectivity: .3,
+            clearcoat: .2
         });
 
 

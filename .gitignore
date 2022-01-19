@@ -7,4 +7,4 @@ output/
 .parcel-cache/
 *.gltf
 *.glb
-test/*.js
+test/
