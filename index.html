@@ -104,7 +104,7 @@
     };
 
     const fetchMedel = async (url) => {
-        const data = await fetch('/test/xdy.gltf')
+        const data = await fetch('/test/Shine_Sprite.gltf')
             .then(res => res.json());
 
         console.time('load')
@@ -113,7 +113,7 @@
             model: data,
             modelType: 'gltf',
             dom,
-            scale: .1,
+            scale: 3,
             rotationValue: 0.25,
             size: {
                 width: 700,
