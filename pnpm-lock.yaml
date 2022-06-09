@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@rollup/plugin-node-resolve': ^13.1.1
@@ -20,7 +20,7 @@ dependencies:
 
 devDependencies:
   '@rollup/plugin-node-resolve': 13.1.1_rollup@2.61.1
-  '@rollup/plugin-typescript': 8.3.0_3bb347879280457c0420527ae9f527b5
+  '@rollup/plugin-typescript': 8.3.0_hozupb4sqbcxybbakj5ot5jhwu
   commitizen: 4.2.4
   cz-conventional-changelog: 3.3.0
   git-cz: 4.8.0
@@ -62,11 +62,12 @@ packages:
   /@commitlint/load/15.0.0:
     resolution: {integrity: sha512-Ak1YPeOhvxmY3ioe0o6m1yLGvUAYb4BdfGgShU8jiTCmU3Mnmms0Xh/kfQz8AybhezCC3AmVTyBLaBZxOHR8kg==}
     engines: {node: '>=v12'}
+    requiresBuild: true
     dependencies:
       '@commitlint/execute-rule': 15.0.0
       '@commitlint/resolve-extends': 15.0.0
       '@commitlint/types': 15.0.0
-      '@endemolshinegroup/cosmiconfig-typescript-loader': 3.0.2_71a2f61964e37a4d68dab6dadd2a99a0
+      '@endemolshinegroup/cosmiconfig-typescript-loader': 3.0.2_ogrpmgle4n5e22g2w3nn2kuzua
       chalk: 4.1.2
       cosmiconfig: 7.0.1
       lodash: 4.17.21
@@ -94,7 +95,7 @@ packages:
     dev: true
     optional: true
 
-  /@endemolshinegroup/cosmiconfig-typescript-loader/3.0.2_71a2f61964e37a4d68dab6dadd2a99a0:
+  /@endemolshinegroup/cosmiconfig-typescript-loader/3.0.2_ogrpmgle4n5e22g2w3nn2kuzua:
     resolution: {integrity: sha512-QRVtqJuS1mcT56oHpVegkKBlgtWjXw/gHNWO3eL9oyB5Sc7HBoc2OLG/nYpVfT/Jejvo3NUrD0Udk7XgoyDKkA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -130,7 +131,7 @@ packages:
       rollup: 2.61.1
     dev: true
 
-  /@rollup/plugin-typescript/8.3.0_3bb347879280457c0420527ae9f527b5:
+  /@rollup/plugin-typescript/8.3.0_hozupb4sqbcxybbakj5ot5jhwu:
     resolution: {integrity: sha512-I5FpSvLbtAdwJ+naznv+B4sjXZUcIvLLceYpITAn7wAP8W0wqc5noLdGIp9HGVntNhRWXctwPYrSSFQxtl0FPA==}
     engines: {node: '>=8.0.0'}
     peerDependencies:
@@ -194,6 +195,12 @@ packages:
     dependencies:
       jsonparse: 1.3.1
       through: 2.3.8
+    dev: true
+
+  /acorn/8.7.1:
+    resolution: {integrity: sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
     dev: true
 
   /add-stream/1.0.0:
@@ -1645,8 +1652,6 @@ packages:
       rollup: 2.61.1
       serialize-javascript: 4.0.0
       terser: 5.10.0
-    transitivePeerDependencies:
-      - acorn
     dev: true
 
   /rollup/2.61.1:
@@ -1876,12 +1881,11 @@ packages:
     resolution: {integrity: sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==}
     engines: {node: '>=10'}
     hasBin: true
-    peerDependencies:
-      acorn: ^8.5.0
     peerDependenciesMeta:
       acorn:
         optional: true
     dependencies:
+      acorn: 8.7.1
       commander: 2.20.3
       source-map: 0.7.3
       source-map-support: 0.5.21

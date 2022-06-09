@@ -26,5 +26,6 @@ export type Options = {
     stats?: boolean
     outputEncoding: number
     rotationValue: number
-    parsed: Function
+    parsed: Function,
+    controls: {minDistance: number, maxDistance: number}
 }

@@ -20,6 +20,7 @@ export default class Modelviewer {
     private animations: Function[];
     private stats?: Stats;
     private parsed?: Function;
+    private touched: boolean = false;
     private sp?: any;
     private controls: any;
 
@@ -68,15 +69,18 @@ export default class Modelviewer {
 
         this.camera.position.set(0, 0, 20);
 
-        this.controls = new OrbitControls( this.camera, this.renderer.domElement );
-
-        this.controls.minDistance = 8;
-        this.controls.maxDistance = 40;
-        this.controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-        this.controls.dampingFactor = 0.05;
-
-        this.controls.screenSpacePanning = false;
-
+        if (this.opts.controls) {
+            this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+            this.controls.minDistance = this.opts.controls.minDistance || 20;
+            this.controls.maxDistance = this.opts.controls.maxDistance || 50;
+            // an animation loop is required when either damping or auto-rotation are enabled
+            this.controls.enableDamping = true;
+            this.controls.dampingFactor = 0.05;
+            this.controls.screenSpacePanning = false;
+            this.controls.addEventListener('start', () => {
+                this.touched = true;
+            });
+        }
 
         this.scene = new THREE.Scene();
 
@@ -95,8 +99,7 @@ export default class Modelviewer {
             } else if (typeof this.opts.model === 'object') {
                 this.loadModelData(this.opts.modelType, JSON.stringify(this.opts.model))
             }
-        }
-        else if (this.opts.modelType === '2d') {
+        } else if (this.opts.modelType === '2d') {
             this.load2DImage(this.opts.model);
         }
 
@@ -166,13 +169,13 @@ export default class Modelviewer {
 
     load2DImage(src: string) {
         var texture = new THREE.TextureLoader().load(src);
-        const material = new THREE.MeshBasicMaterial( { map: texture, transparent: true } );
-        const quad = new THREE.BoxGeometry( 1, 1, 1 );
+        const material = new THREE.MeshBasicMaterial({map: texture, transparent: true});
+        const quad = new THREE.BoxGeometry(1, 1, 1);
 
         // const material1 = new THREE.MeshBasicMaterial( { map: texture, transparent: true } );
         // const quad1 = new THREE.PlaneGeometry( 1.3 , 1.3 );
 
-        const mesh = new THREE.Mesh( quad, material );
+        const mesh = new THREE.Mesh(quad, material);
         mesh.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
         const scene = new THREE.Scene();
         scene.add(mesh);
@@ -236,6 +239,7 @@ export default class Modelviewer {
                 }
 
                 gltf.scene.scale.set(this.opts.scale, this.opts.scale, this.opts.scale);
+                gltf.scene.name = 'model';
                 this.scene.add(gltf.scene);
                 let dyal = 0.0015;
                 let rotationValue = this.opts.rotationValue;
@@ -280,8 +284,18 @@ export default class Modelviewer {
     public animate() {
         requestAnimationFrame(() => this.animate());
         this.stats && this.stats.update();
-        this.animations.forEach(funcs => funcs());
-        this.controls.update();
+        if (!this.touched) {
+            this.animations.forEach(funcs => funcs());
+        }
+        this.controls && this.controls.update();
         this.renderer.render(this.scene, this.camera);
+    }
+
+    public reset() {
+        this.touched = false;
+        const model = this.scene.getObjectByName('model');
+        model?.rotation.set(0, 0, 0);
+        this.camera.rotation.set(0, 0, 0);
+        this.camera.position.set(0, 0, 20);
     }
 }

@@ -53,7 +53,7 @@
     <!-- <input id="l1" value="0.7"> -->
 	<!--    <label>环境光2</label>-->
     <!--    <input id="l2" value="0.7">-->
-<!--    <button onclick="reset()">设置</button>-->
+    <button onclick="resetPo()">重置</button>
 </div>
 <script src="./dist/modelviewer.js"></script>
 <script>
@@ -103,8 +103,12 @@
         mv.loadModelData('gltf', data);
     };
 
+    const resetPo = () => {
+        mv.reset();
+    }
+
     const fetchMedel = async (url) => {
-        const data = await fetch('/test/Shine_Sprite.gltf')
+        const data = await fetch('/test/ast.gltf')
             .then(res => res.json());
 
         console.time('load')
@@ -113,15 +117,21 @@
             model: data,
             modelType: 'gltf',
             dom,
-            scale: 3,
+            scale: .1,
             rotationValue: 0.25,
             size: {
                 width: 700,
                 height: 400
             },
-            helper: true,
+            helper: false,
+            // ambientLights: [
+            //     { color: 0xffffff, intensity: .7}
+            // ],
+            // directionalLights: [
+            //     { position: [4, 6, 18], intensity: .6 }
+            // ],
             ambientLights: [
-                { color: 0xffffff, intensity: .7}
+                { color: 0xffffff, intensity: .7 }
             ],
             directionalLights: [
                 { position: [4, 6, 18], intensity: .6 }
@@ -130,16 +140,26 @@
             opacity: .3,
             parsed: success => {
                 console.timeEnd('load');
-            }
+            },
+            controls: true
         }, {
-            roughness: 0.8,
-            transmission: 2,
-            thickness: .4,
+            // roughness: 0.8,
+            // transmission: 2,
+            // thickness: .4,
+            // opacity: 0.5,
+            // transparent: true,
+            // sheen: .4,
+            // reflectivity: .3,
+            // clearcoat: .2
+
+            roughness: 0.5,
+            transmission: 2.2,
+            thickness: 10,
             opacity: 0.5,
             transparent: true,
-            sheen: .4,
-            reflectivity: .3,
-            clearcoat: .2
+            sheen: .6,
+            reflectivity: .4,
+            clearcoat: 1.2
         });
     };
 
