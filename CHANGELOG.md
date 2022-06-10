@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.11](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.10...v0.7.11) (2022-06-10)
+
+
+### Bug Fixes
+
+* 🐛 remove controls ([cf0b5fc](https://github.com/SmilingXinyi/3dmodelviewer/commit/cf0b5fc1d3faa72f862d706e9860e52a07918f6f))
+
 ### [0.7.10](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.9...v0.7.10) (2022-06-10)
 
 
