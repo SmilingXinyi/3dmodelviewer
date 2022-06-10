@@ -75,6 +75,7 @@ export default class Modelviewer {
             this.controls.maxDistance = this.opts.controls.maxDistance || 50;
             // an animation loop is required when either damping or auto-rotation are enabled
             this.controls.enableDamping = true;
+            this.controls.enablePan = false;
             this.controls.dampingFactor = 0.05;
             this.controls.screenSpacePanning = false;
             this.controls.addEventListener('start', () => {
