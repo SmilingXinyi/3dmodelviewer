@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <title>Playground</title>
 
     <style>
@@ -45,6 +46,7 @@
 </head>
 
 <body ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+<video id="video" preload="auto" controls muted autoplay playsinline style="width: 500px;height: 500px;" src="https://xasset-offline.bj.bcebos.com/300100/0526_NFT1_Motion_V1_1.mp4?authorization=bce-auth-v1%2F1314c565ac9c4359a7359dbbc6270a7e%2F2022-06-16T13%3A48%3A10Z%2F-1%2Fhost%2F082ac0f40b1548f86259922f3963bca69b994b3db4ece364f979af18cc7e0661"></video>
 <!--<img class="timg" src="/dist/test.png" width="300" />-->
 <div id="container" style="width: 700px; height: 400px; background-color: #000"></div>
 <!--<div id="container2" style="width: 700px; height: 400px; background-color: #000"></div>-->
@@ -57,6 +59,26 @@
 </div>
 <script src="./dist/modelviewer.js"></script>
 <script>
+    wx.config({
+        debug: false,
+        appId: '111',
+        timestamp: '111',
+        nonceStr: '111',
+        signature: '111',
+        jsApiList: []
+    })
+    wx.ready(()=> {
+        alert('Hi');
+        let video = document.querySelector("#video");
+        video.play();
+    });
+
+    // document.addEventListener("WeixinJSBridgeReady", function () {
+    //     // video.play()
+    //     alert('aa');
+    // }, false);
+
+
     const dom = document.querySelector('#container');
     let model = null;
 
@@ -140,6 +162,10 @@
             opacity: .3,
             parsed: success => {
                 console.timeEnd('load');
+            },
+            controls: {
+                maxDistance: 50,
+                minDistance: 15
             }
         }, {
             // roughness: 0.8,
