@@ -9,6 +9,7 @@ type Size = {
 }
 
 export type Options = {
+    hrd: ArrayBuffer;
     auto: boolean
     modelType: string
     model: string

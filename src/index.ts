@@ -7,14 +7,16 @@ import * as THREE from 'three';
 import {
     Options
 } from './types';
-import {Object3D, Camera, Light, WebGLRenderer} from 'three';
+import {Scene, Camera, Light, WebGLRenderer, UnsignedByteType, PMREMGenerator} from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+
 export default class Modelviewer {
     private opts: Options;
-    private scene: Object3D;
+    private scene: Scene;
     private renderer: WebGLRenderer;
     private camera: Camera;
     private animations: Function[];
@@ -55,6 +57,9 @@ export default class Modelviewer {
 
         this.renderer.outputEncoding = parseInt(String(this.opts.outputEncoding), 10) === 1
             ? THREE.sRGBEncoding : THREE.LinearEncoding;
+
+        this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        this.renderer.toneMappingExposure = 1;
 
         this.renderer.setSize(widht, height);
 
@@ -147,6 +152,36 @@ export default class Modelviewer {
             });
         }
 
+
+        const pmremGenerator = new PMREMGenerator(this.renderer); // 使用hdr作为背景色
+        pmremGenerator.compileEquirectangularShader();
+
+        console.log(opts);
+
+        // const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+        // pmremGenerator.dispose();
+        // this.scene.environment = envMap;
+
+        const texture = new RGBELoader()
+            .setDataType(UnsignedByteType)
+            // .load('https://duerstatic.cdn.bcebos.com/show_cloud/nft-dev/ThreeSoftboxesStudio2.hdr', texture => {
+            .load('https://gltf-viewer.donmccurdy.com/assets/environment/venice_sunset_1k.hdr', texture => {
+                const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+                // envMap.isPmremTexture = true;
+                pmremGenerator.dispose();
+
+                // this.scene.environment = envMap; // 给场景添加环境光效果
+                // this.scene.background = envMap; // 给场景添加背景图
+            });
+
+
+        console.log(texture);
+
+        // new THREE.DataTexture( data, width, height );
+
+
+
+
         this.animate();
     }
 
@@ -200,6 +235,14 @@ export default class Modelviewer {
         if (modelType === 'gltf') {
             const loader = new GLTFLoader();
             loader.parse(modelsrc, '', gltf => {
+
+                var position = new THREE.Vector3();
+                position.setFromMatrixPosition( gltf.scene.matrixWorld );
+
+
+
+                console.log(gltf.scene.matrixWorld);
+
                 // @ts-ignore
                 if (gltf.scene.children[0]?.children[0]?.material?.opacity === 0) {
                     // @ts-ignore
@@ -215,6 +258,15 @@ export default class Modelviewer {
                 }
 
                 let mesh = gltf.scene.children[0];
+                console.log(mesh.geometry);
+                console.log(mesh);
+                // mesh?.geometry?.computeBoundingBox();
+                // var middle = new THREE.Vector3();
+
+                // middle.x = (geometry.boundingBox.max.x + geometry.boundingBox.min.x) / 2;
+                // middle.y = (geometry.boundingBox.max.y + geometry.boundingBox.min.y) / 2;
+                // middle.z = (geometry.boundingBox.max.z + geometry.boundingBox.min.z) / 2;
+
                 mesh.castShadow = true;
                 if (mesh.children.length > 0) {
                     mesh.children = mesh.children.map(i => {
