@@ -1,6 +1,8 @@
 import serve from 'rollup-plugin-serve'
 import typescript from '@rollup/plugin-typescript';
-// import {nodeResolve} from '@rollup/plugin-node-resolve';
+import {nodeResolve} from '@rollup/plugin-node-resolve';
+import html from '@rollup/plugin-html';
+
 
 // import commonjs from "@rollup/plugin-commonjs";
 // import {terser} from 'rollup-plugin-terser';
@@ -41,7 +43,7 @@ import typescript from '@rollup/plugin-typescript';
 
 
 export default {
-    input: './src/index.ts',
+    input: './src/app.ts',
     output: [
         {
             name: 'modelviewer',
@@ -49,17 +51,21 @@ export default {
             dir: 'dist',
             sourcemap: true,
             manualChunks: {
-                // three: ['three'],
-                // GLTFLoader: ['three/examples/jsm/loaders/GLTFLoader'],
-                // stats: ['three/examples/jsm/libs/stats.module'],
-                // OrbitControls: ['three/examples/jsm/controls/OrbitControls']
-            }
+                three: ['three'],
+                GLTFLoader: ['three/examples/jsm/loaders/GLTFLoader'],
+                RGBELoader: ['three/examples/jsm/loaders/RGBELoader'],
+                stats: ['three/examples/jsm/libs/stats.module'],
+                OrbitControls: ['three/examples/jsm/controls/OrbitControls']
+            },
+            chunkFileNames: '[name].js'
         }
     ],
     plugins: [
         typescript({tsconfig: './tsconfig.json'}),
+        nodeResolve(),
+        html({}),
         serve({
-            open: true,
+            open: false,
             contentBase: ['dist'],
             host: 'localhost',
             port: 8001

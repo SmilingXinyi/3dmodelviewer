@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@rollup/plugin-html': ^0.2.4
   '@rollup/plugin-node-resolve': ^13.1.1
   '@rollup/plugin-typescript': ^8.3.0
   '@types/three': ^0.135.0
@@ -20,6 +21,7 @@ dependencies:
   three: 0.135.0
 
 devDependencies:
+  '@rollup/plugin-html': 0.2.4_rollup@2.75.7
   '@rollup/plugin-node-resolve': 13.1.1_rollup@2.75.7
   '@rollup/plugin-typescript': 8.3.0_ukjq56ulkmisufrvdbo4lsjt3q
   commitizen: 4.2.4
@@ -144,6 +146,15 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
     optional: true
+
+  /@rollup/plugin-html/0.2.4_rollup@2.75.7:
+    resolution: {integrity: sha512-x0qpNXxbmGa9Jnl4OX89AORPe2T/a4DqNK69BGRnEdaPKq6MdiUXSTam/eCkF5DxkQGcRcPq0L4vzr/E3q4mVA==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0
+    dependencies:
+      rollup: 2.75.7
+    dev: true
 
   /@rollup/plugin-node-resolve/13.1.1_rollup@2.75.7:
     resolution: {integrity: sha512-6QKtRevXLrmEig9UiMYt2fSvee9TyltGRfw+qSs6xjUnxwjOzTOqy+/Lpxsgjb8mJn1EQNbCDAvt89O4uzL5kw==}
