@@ -10,7 +10,7 @@ const outConf = {
 }
 
 export default {
-    input: 'src/start.ts',
+    input: 'src/index.ts',
     output: [
         outConf,
         Object.assign({}, outConf, {
