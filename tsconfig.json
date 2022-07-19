@@ -5,12 +5,11 @@
         "types"
     ],
     "compilerOptions": {
-        "module": "es2015",
+        "module": "es2020",
         "lib": [
             "dom",
             "esnext"
         ],
-        "outDir": "types",
         "declarationDir": "types",
         "importHelpers": true,
         // output .d.ts declaration files for consumers

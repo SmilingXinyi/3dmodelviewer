@@ -10,13 +10,22 @@ const outConf = {
 }
 
 export default {
-    input: 'src/index.ts',
+    input: 'src/start.ts',
     output: [
-        outConf
+        outConf,
+        Object.assign({}, outConf, {
+            file: 'dist/modelviewer.min.js',
+            plugins: [
+                terser()
+            ]
+        }),
+        Object.assign({}, outConf, {
+            format: 'esm',
+            file: 'dist/modelviewer.esm.js'
+        })
     ],
     plugins: [
         typescript({tsconfig: './tsconfig.json'}),
         nodeResolve()
-    ],
-
+    ]
 };
