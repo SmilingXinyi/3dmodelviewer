@@ -66,7 +66,7 @@ export default {
         html({}),
         serve({
             open: false,
-            contentBase: ['dist'],
+            contentBase: ['dist', 'test'],
             host: 'localhost',
             port: 8001
         })

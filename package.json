@@ -15,7 +15,7 @@
     },
     "scripts": {
         "start": "rollup --config scripts/rollup.config.dev.js -w",
-        "build": "rollup --config scripts/rollup.config.dev.js",
+        "build": "rollup --config scripts/rollup.config.js",
         "size": "size-limit",
         "analyze": "size-limit --why",
         "commit": "git-cz",

@@ -27,6 +27,5 @@ export default {
     plugins: [
         typescript({tsconfig: './tsconfig.json'}),
         nodeResolve()
-    ],
-
+    ]
 };

@@ -8,7 +8,7 @@ document.body.appendChild(div)
 
 const ele = document.querySelector('#container');
 
-const data = fetch('/test/lls1.gltf')
+fetch('/xiaodu.gltf')
     .then(res => res.json())
     .then(result => {
         const mver = new Modelviewer(ele!, {
@@ -16,7 +16,7 @@ const data = fetch('/test/lls1.gltf')
                 width: 700,
                 height: 400
             },
-            environment: '/test/studio008.hdr'
+            environment: '/StudioC.hdr'
         });
 
         mver.loadModelData('gltf', result);
