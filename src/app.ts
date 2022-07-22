@@ -8,15 +8,18 @@ document.body.appendChild(div)
 
 const ele = document.querySelector('#container');
 
-fetch('/xiaodu.gltf')
+fetch('/xd0720.gltf')
     .then(res => res.json())
     .then(result => {
+
         const mver = new Modelviewer(ele!, {
             size: {
                 width: 700,
                 height: 400
             },
-            environment: '/StudioC.hdr'
+            environment: {
+                url: '/StudioH.hdr'
+            }
         });
 
         mver.loadModelData('gltf', result);

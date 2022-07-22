@@ -16,6 +16,7 @@ export default class Modelviewer {
     private camera: PerspectiveCamera;
     private controls: OrbitControls;
     private pmremGenerator: PMREMGenerator;
+    private ready4Env?: Function;
 
     constructor(ele: Element, options: any) {
         this.ele = ele;
@@ -41,20 +42,23 @@ export default class Modelviewer {
 
         if (options.axesHelper) {
             // Todo: fix 100
-            const axesHelper = new AxesHelper(100);
+            const axesHelper = new AxesHelper(options.axesHelper);
             this.scene.add(axesHelper);
         }
 
         this.camera = new PerspectiveCamera(
             60, width / height, 0.01, 1000
-        )
+        );
 
-        this.scene.add( this.camera );
+        this.scene.add(this.camera);
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.autoRotate = false;
         this.controls.autoRotateSpeed = -10;
         this.controls.screenSpacePanning = true;
+
+        this.controls.minPolarAngle=this.controls.maxPolarAngle= Math.PI / 2;
+
 
         this.pmremGenerator = new PMREMGenerator(this.renderer); // 使用hdr作为背景色
         this.pmremGenerator.compileEquirectangularShader();
@@ -65,7 +69,10 @@ export default class Modelviewer {
         const environment = options.environment;
 
         if (environment) {
-            this.getCubeMapTexture(environment)
+            this.getCubeMapTexture(environment.url);
+            if (options.environment.callback) {
+                this.ready4Env = options.environment.callback;
+            }
         }
 
         this.ele.appendChild(this.renderer.domElement);
@@ -73,7 +80,7 @@ export default class Modelviewer {
 
     loadModelData(modelType = 'GLTF', modelSrc: string) {
         const src = JSON.stringify(modelSrc);
-        if (modelType === 'gltf') {
+        if (modelType.toLowerCase() === 'gltf') {
             const loader = new GLTFLoader();
             loader.parse(src, '', gltf => {
                 const object = gltf.scene;
@@ -89,12 +96,13 @@ export default class Modelviewer {
                 // this.camera.position.x += size / 1.5;
                 this.camera.position.x = 0;
                 this.camera.position.y = 0; // += size / 5.0;
-                // this.camera.position.z += size / 1.5;
                 this.camera.position.z += size;
+                // this.camera.position.z += size;
 
-                this.controls.maxDistance = size * 10;
-                this.camera.near = size / 100;
-                this.camera.far = size * 100;
+                this.controls.maxDistance = size * 5;
+                this.controls.minDistance = size / 5;
+                this.camera.near = size / 10;
+                this.camera.far = size * 10;
                 this.camera.updateProjectionMatrix();
 
                 this.camera.lookAt(center);
@@ -123,8 +131,10 @@ export default class Modelviewer {
             .load(hdrsrc, (texture) => {
                 const envMap = this.pmremGenerator.fromEquirectangular(texture).texture;
                 this.pmremGenerator.dispose();
-                this.scene.environment = envMap
+                this.scene.environment = envMap;
+                this.ready4Env && this.ready4Env(true);
             }, undefined, (error) => {
+                this.ready4Env && this.ready4Env(false);
                 throw error;
             });
     }

@@ -10,7 +10,7 @@
             "dom",
             "esnext"
         ],
-        "declarationDir": "types",
+        "declarationDir": "dist/types",
         "importHelpers": true,
         // output .d.ts declaration files for consumers
         "declaration": true,
