@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v1.0.1-alpha.0...v1.1.0) (2022-07-26)
+
+
+### Features
+
+* controls support axis ([cda3925](https://github.com/SmilingXinyi/3dmodelviewer/commit/cda3925b08a0193262776c64e0c7b3799a334c20))
+
 ### [1.0.1-alpha.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.14...v1.0.1-alpha.0) (2022-07-19)
 
 ### [0.7.14](https://github.com/SmilingXinyi/3dmodelviewer/compare/v0.7.10...v0.7.14) (2022-07-19)
