@@ -13,27 +13,27 @@ fetch('/xdyb.gltf')
     .then(result => {
 
         const mver = new Modelviewer(ele!, {
-            size: {
-                width: 700,
-                height: 700
-            },
-            environment: {
-            //     url: '/StudioH.hdr'
-            },
-            axes: {
+            // size: {
+            //     width: 700,
+            //     height: 700
+            // },
+            // environment: {
+                // url: '/xiaodu-ast1.hdr'
+            // },
+            // axes: {
                 // helper: 100
-            },
-            camera: {
-                // helper: true,
-                lookAtPoint: true
-            },
-            controls: {},
+            // },
+            // camera: {
+            //     helper: true,
+            //     lookAtPoint: true
+            // },
+            // controls: {},
             lights: {
-                hemisphereLight: [0xffffff, 0x444444, 1],
-                ambientLights: {
-                    color: 0xff0000,
-                    intensity: 0.5
-                }
+                hemisphereLight: [0x333fff, 0x000000, 1],
+            //     ambientLights: {
+            //         color: 0xffff00,
+            //         intensity: 0.3
+            //     }
             }
         });
 

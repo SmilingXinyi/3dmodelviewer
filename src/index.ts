@@ -67,8 +67,8 @@ export default class Modelviewer {
 
         this.clock = new Clock();
 
-        const width = options.size.width || ele.clientWidth;
-        const height = options.size.height || ele.clientHeight;
+        const width = options.size?.width || ele.clientWidth;
+        const height = options.size?.height || ele.clientHeight;
 
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(width, height);
@@ -76,7 +76,7 @@ export default class Modelviewer {
 
         this.scene = new Scene();
 
-        if (options.axes.helper) {
+        if (options.axes?.helper) {
             const axesHelper = new AxesHelper(options.axes.helper);
             this.scene.add(axesHelper);
         }
@@ -85,7 +85,7 @@ export default class Modelviewer {
             60, width / height, 0.01, 1000
         );
 
-        if (options.camera.helper) {
+        if (options.camera && options.camera.helper) {
             const cameraHelper = new CameraHelper(this.camera);
             this.scene.add(cameraHelper);
         }
@@ -112,8 +112,6 @@ export default class Modelviewer {
 
         this.renderer.toneMapping = ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1;
-
-        this.renderer.shadowMap.enabled = true;
 
         const environment = options.environment;
 
@@ -147,9 +145,6 @@ export default class Modelviewer {
                 const {position, color = 0xffffff, intensity = 1} = directionalLightInfo;
                 const directionalLight = new DirectionalLight(color, intensity);
                 directionalLight.position.set(...position);
-                directionalLight.castShadow = true;
-                directionalLight.shadow.mapSize.width = 2048;
-                directionalLight.shadow.mapSize.height = 2048;
                 this.scene.add(directionalLight);
             });
         }
@@ -164,17 +159,17 @@ export default class Modelviewer {
         if (modelType.toLowerCase() === 'gltf') {
             const loader = new GLTFLoader();
             loader.parse(src, '', gltf => {
-                console.log(gltf);
                 const object = gltf.scene;
                 const box = new Box3().setFromObject(object);
-                console.log(box);
                 const size = box.getSize(new Vector3()).length();
                 const center = box.getCenter(new Vector3());
 
                 const animations = gltf.animations;
-                this.mixer = new AnimationMixer( object );
-                let action = this.mixer.clipAction(animations[0]);
-                action.play()
+                if (animations && animations.length > 0) {
+                    this.mixer = new AnimationMixer(object);
+                    let action = this.mixer.clipAction(animations[0]);
+                    action.play()
+                }
 
                 object.position.x += (object.position.x - center.x);
                 object.position.y += (object.position.y - center.y);
