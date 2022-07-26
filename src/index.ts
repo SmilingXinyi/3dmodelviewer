@@ -154,7 +154,7 @@ export default class Modelviewer {
         this.ele.appendChild(this.renderer.domElement);
     }
 
-    loadModelData(modelType = 'gltf', modelSrc: string) {
+    loadModelData(modelType = 'gltf', modelSrc: string, callback?: Function) {
         const src = JSON.stringify(modelSrc);
         if (modelType.toLowerCase() === 'gltf') {
             const loader = new GLTFLoader();
@@ -208,6 +208,8 @@ export default class Modelviewer {
                 } else {
                     this.camera.lookAt(center);
                 }
+
+                callback && callback();
 
                 this.scene.add(gltf.scene);
                 this.animate();
