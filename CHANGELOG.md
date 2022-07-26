@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/SmilingXinyi/3dmodelviewer/compare/v1.1.1...v1.2.0) (2022-07-26)
+
+
+### Features
+
+* 🎸 model load callback ([5ad753f](https://github.com/SmilingXinyi/3dmodelviewer/commit/5ad753f3bd1394dd5d46acd157e747a169609ed6))
+
 ### [1.1.1](https://github.com/SmilingXinyi/3dmodelviewer/compare/v1.1.0...v1.1.1) (2022-07-26)
 
 
