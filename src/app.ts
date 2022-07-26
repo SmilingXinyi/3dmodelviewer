@@ -17,9 +17,12 @@ fetch('/xdyb.gltf')
             //     width: 700,
             //     height: 700
             // },
-            // environment: {
-                // url: '/xiaodu-ast1.hdr'
-            // },
+            environment: {
+                url: '/xiaodu-ast1.hdr',
+                callback: () => {
+                    console.log('环境加载完成');
+                }
+            },
             // axes: {
                 // helper: 100
             // },
@@ -34,8 +37,11 @@ fetch('/xdyb.gltf')
             //         color: 0xffff00,
             //         intensity: 0.3
             //     }
-            }
+            },
+            stats: true,
         });
 
-        mver.loadModelData('gltf', result);
+        mver.loadModelData('gltf', result, () => {
+            console.log('模型加载完成');
+        });
     })
