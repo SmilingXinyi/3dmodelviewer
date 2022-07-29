@@ -159,7 +159,10 @@ export default class Modelviewer {
         if (modelType.toLowerCase() === 'gltf') {
             const loader = new GLTFLoader();
             loader.parse(src, '', gltf => {
-                const object = gltf.scene;
+                let object = gltf.scene;
+                if (this.options.model.fix) {
+                    object = this.options.model.fix(object);
+                }
                 const box = new Box3().setFromObject(object);
                 const size = box.getSize(new Vector3()).length();
                 const center = box.getCenter(new Vector3());
